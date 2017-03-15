@@ -52,7 +52,21 @@ for i = 1:floor(height/8)*8
 end
 fprintf('可以嵌入信息位数：%d位！\n',sizes); 
  %F3隐写
- Secret = input('输入隐藏信息:','s');
+ s = input('输入隐藏信息或文件:','s');
+ if strfind(s,'.')
+    f=fopen(strcat('/Users/kuangmeng/Documents/MATLAB/SecretInBMP/init/',s),'rb');
+    [a,count]=fread(f);
+    fclose(f);
+    SD=dec2bin(a);
+    Secret='';
+    for i = 1:floor(length(SD)/8)
+        for j = 1:8
+             Secret=strcat(Secret,SD(i,j));
+        end
+    end
+ else
+     Secret = s;
+ end
  LEN = length(Secret);
  fprintf('待嵌入信息位数：%d位！\n',LEN);
  if LEN <= sizes
@@ -129,10 +143,9 @@ fprintf('可以嵌入信息位数：%d位！\n',sizes);
             gray(8*(i-1)+1:8*i,8*(j-1)+1:j*8)=tmp;
         end
     end
- else
-     
+ else    
  end
- 
+ fprintf('*****信息隐写成功！*****\n\n*****下面开始还原！*****\n');
 %  %反量化
 %  backtmp = gray;
 %  for i=1:floor(height/8)*8
@@ -206,7 +219,19 @@ else
     str='';
 end
 if ~strcmpi(str,'')
-    fprintf('提取到的信息：%s\n',str);
+    if strfind(s,'.')
+        for i = 1:floor(str/8)
+            for j =1:8
+                SD(i,j)=str((i-1)*8+j);
+            end
+        end
+        origin=bin2dec(SD);
+        writeback=fopen(strcat('/Users/kuangmeng/Documents/MATLAB/SecretInBMP/final/',s),'wb');
+        fwrite(writeback,origin);
+        fprintf('文件写入成功：%s\n',s);
+    else
+        fprintf('提取到的信息：%s\n',str);
+    end
 end
 
  

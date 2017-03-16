@@ -3,6 +3,7 @@ BMP = imread(strcat('/Users/kuangmeng/Documents/MATLAB/SecretInBMP/init/',road))
 [height,width,channels] = size(BMP);
 %转化成灰度图
 gray = rgb2gray(BMP);
+%imshow(gray);
 %8X8进行DCT变换并写回
 for i =1:floor(height/8)
     for j =1:floor(width/8)
@@ -69,6 +70,7 @@ fprintf('可以嵌入信息位数：%d位！\n',sizes);
  end
  LEN = length(Secret);
  fprintf('待嵌入信息位数：%d位！\n',LEN);
+ choice = 3;
  if LEN <= sizes
     choice = input('选择隐写方式：（1：JSTEG隐写；2：F3隐写）','s');
  end
@@ -145,7 +147,9 @@ fprintf('可以嵌入信息位数：%d位！\n',sizes);
     end
  else    
  end
- fprintf('*****信息隐写成功！*****\n\n*****下面开始还原！*****\n');
+ if choice ~= 3
+     fprintf('*****信息隐写成功！*****\n\n*****下面开始还原！*****\n');
+ end
 %  %反量化
 %  backtmp = gray;
 %  for i=1:floor(height/8)*8

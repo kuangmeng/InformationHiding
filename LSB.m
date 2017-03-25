@@ -3,6 +3,7 @@ BMP = imread(strcat('/Users/kuangmeng/Documents/MATLAB/SecretInBMP/init/',road))
 [height,width,channels] = size(BMP);
 %转化成灰度图
 gray = rgb2gray(BMP);
+imwrite(gray,strcat('/Users/kuangmeng/Documents/MATLAB/SecretInBMP/final/1',road));
 subplot(121),
 imshow(gray),
 title('原图像');
@@ -41,6 +42,7 @@ if strfind(s,'.')
             end
         end
     end
+    imwrite(gray,strcat('/Users/kuangmeng/Documents/MATLAB/SecretInBMP/final/2',road));
     subplot(122),
     imshow(gray),
     title('嵌入后');
@@ -74,5 +76,23 @@ if strfind(s,'.')
         end
     end
  end
+ %计算峰值信噪比程序
+init=rgb2gray(BMP);
+if (size(init))~=(size(gray))
+    error('两幅图象大小不一致!');
+end
+    [m,n] = size(init);
+    A = double(init);
+    B = double(gray);
+    x = sum( sum( (A-B).^2 ) );
+    MSE = x / (m * n);
+if  x == 0
+    error('两幅图像完全一样');
+    PSNR = 200;
+else
+    PSNR = 10*log10( (255^2) / MSE );                                                      
+end
+disp('两幅图片的峰值信噪比为：');
+disp(PSNR); %输出峰值信噪比
 
  

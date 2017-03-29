@@ -3,7 +3,7 @@ name = strcat(pn, fn);
 [fn, pn] = uigetfile({'*.bmp'}, '选择图片');
 name2 = strcat(pn, fn);
 RSP(name,1);
-RSP(name2,2);
+RSP(name2);
 function RSP(name,x)
 BMP=imread(name);
 [~,~,channels] = size(BMP);
@@ -58,6 +58,7 @@ for i = 1 : 10
     end
 end
 rs = rs / (m * n);
+figure;
 if(x == 1)
     subplot(121);
     plot([0.1:0.1:1.0], rs(:, 1),[0.1:0.1:1.0],rs(:, 2),[0.1:0.1:1.0],rs(:, 3),[0.1:0.1:1.0],rs(:, 4)),title('原图像RS分析曲线');

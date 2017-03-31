@@ -1,6 +1,8 @@
 # InformationHiding
 ## 信息隐藏实验
 * F3隐写
+* LSB隐写
+* RS隐写分析
 * Jsteg隐写
 ## 隐藏信息
 * 二进制字符串
